@@ -1,0 +1,13 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{4C2F0D54-4BED-5653-336D-DE8AEA1DCC31}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "ServerTestProject",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
