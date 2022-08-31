@@ -17,12 +17,14 @@ ACharacterBase::~ACharacterBase()
 
 void ACharacterBase::OnAnimBlendOutA(UAnimMontage* Montage, bool bInterrupted)
 {
-	OnAnimBlendOutDelegate.Broadcast();
+	if (OnAnimBlendOutDelegate.IsBound())
+		OnAnimBlendOutDelegate.Broadcast();
 }
 
 void ACharacterBase::OnAnimNotifyA(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload)
 {
-	OnAnimNotifyDelegate.Broadcast(NotifyName);
+	if (OnAnimNotifyDelegate.IsBound())
+		OnAnimNotifyDelegate.Broadcast(NotifyName);
 }
 
 void ACharacterBase::ChangeState(const uint8& nextState)

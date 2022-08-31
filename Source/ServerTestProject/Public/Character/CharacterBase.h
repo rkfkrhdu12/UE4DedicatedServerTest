@@ -21,7 +21,6 @@ public:
 	ACharacterBase();
 	virtual ~ACharacterBase();
 public:
-	FOnCharacterEvent OnChangeStateDelegate;
 
 	FOnAnimBlendOut OnAnimBlendOutDelegate;
 	FOnAnimNotify OnAnimNotifyDelegate;
@@ -33,18 +32,22 @@ public:
 
 	virtual void OnAnimBlendOut() {}
 	virtual void OnAnimNotify(FName NotifyName) {}
-public:
-	void ChangeState(const uint8& nextState);
-	void ReturnState();
 
-protected:
-	class UBehaviorStateManager* StateManager = nullptr;
-
-	uint8 CurState = static_cast<uint8>(0);
-
-protected:
-	bool IsValidStateMgr() const;
 
 public:
 	void ErrorCheck(bool IsLog, const FString ErrorMessage) const;
+
+
+public: // PlayerCharacter로 이전 해야함.
+	FOnCharacterEvent OnChangeStateDelegate;
+public:
+	void ChangeState(const uint8& nextState);
+	void ReturnState();
+protected:
+	bool IsValidStateMgr() const;
+protected:
+	class UBehaviorStateManager* StateManager = nullptr;
+
+protected:
+	uint8 CurState = static_cast<uint8>(0);
 };

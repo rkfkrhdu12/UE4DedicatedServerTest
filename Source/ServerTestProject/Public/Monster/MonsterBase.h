@@ -17,11 +17,15 @@ public:
 	AMonsterBase();
 	virtual ~AMonsterBase();
 
+public:
+	virtual void BeginPlay() override;
+
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AI")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = AI)
 		class UBehaviorTree* BehaviorTree;
 
 public:
+
 	class UBehaviorTree* GetBehaviorTree() const { return BehaviorTree; }
 	void SetBehaviorTree(class UBehaviorTree* val) { BehaviorTree = val; }
 };

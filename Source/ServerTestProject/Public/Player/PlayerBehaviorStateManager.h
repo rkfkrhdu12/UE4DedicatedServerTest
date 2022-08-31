@@ -26,7 +26,6 @@ class SERVERTESTPROJECT_API UPlayerBehaviorStateManager : public UBehaviorStateM
 	GENERATED_BODY()
 public:
 	UPlayerBehaviorStateManager();
-	~UPlayerBehaviorStateManager();
 
 protected:
 	virtual void BeginPlay() override;

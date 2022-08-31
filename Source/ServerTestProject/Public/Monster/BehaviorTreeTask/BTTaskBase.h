@@ -14,15 +14,15 @@ class SERVERTESTPROJECT_API UBTTaskBase : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
 public:
-	UBTTaskBase(const FObjectInitializer& ObjectInitailizer);
+	UBTTaskBase();
 
 	virtual EBTNodeResult::Type	ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 	virtual void OnGameplayTaskActivated(UGameplayTask& Task) override;
 protected:
-	const class UBlackboardComponent* BlackBoard;
+	class UBlackboardComponent* BlackBoard;
 	class AAIControllerBase* Controller;
-	class AMonsterBase* Monster;
+	class AMonsterBase* MonsterCharacter;
 
 protected:
 	bool IsValidBlackBoard() const;

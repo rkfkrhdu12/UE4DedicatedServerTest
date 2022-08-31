@@ -7,7 +7,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 
-UBTTaskBase::UBTTaskBase(const FObjectInitializer& ObjectInitailizer)
+UBTTaskBase::UBTTaskBase()
 {
 	bCreateNodeInstance = true;
 	NodeName = "NullTask";
@@ -26,10 +26,10 @@ EBTNodeResult::Type UBTTaskBase::ExecuteTask(UBehaviorTreeComponent& OwnerComp, 
 
 	BlackBoard = OwnerComp.GetBlackboardComponent();
 	Controller = Cast<AAIControllerBase>(OwnerComp.GetAIOwner());
-	if (BlackBoard == nullptr || Controller == nullptr) return EBTNodeResult::Failed;
+	if (BlackBoard == nullptr || Controller == nullptr) { return EBTNodeResult::Failed; }
 
-	Monster = Cast<AMonsterBase>(Controller->GetPawn());
-	if (Monster == nullptr) return EBTNodeResult::Failed;
+	MonsterCharacter = Cast<AMonsterBase>(Controller->GetPawn());
+	if (MonsterCharacter == nullptr) { return EBTNodeResult::Failed; }
 
 	return EBTNodeResult::Succeeded;
 }
@@ -46,5 +46,5 @@ bool UBTTaskBase::IsValidController() const
 
 bool UBTTaskBase::IsValidCharacter() const
 {
-	return Monster != nullptr && Monster->IsValidLowLevelFast();
+	return MonsterCharacter != nullptr && MonsterCharacter->IsValidLowLevelFast();
 }
