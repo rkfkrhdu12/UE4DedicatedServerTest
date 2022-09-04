@@ -1,3 +1,4 @@
+#pragma once
 
 class StateBase
 {
@@ -9,6 +10,8 @@ public:
 	virtual void Start();
 	virtual void Update(float DeltaTime);
 
+	virtual void AnimBlendOut();
+	virtual void AnimNotify(class FName notifyName);
 protected:
 	ACharacterBase* Character = nullptr;
 

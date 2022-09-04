@@ -15,11 +15,9 @@ UCLASS()
 class SERVERTESTPROJECT_API ACharacterBase : public ACharacter
 {
 	GENERATED_BODY()
-
 public:
 	// Sets default values for this character's properties
 	ACharacterBase();
-	virtual ~ACharacterBase();
 public:
 
 	FOnAnimBlendOut OnAnimBlendOutDelegate;
@@ -30,24 +28,18 @@ public:
 	UFUNCTION()
 		virtual void OnAnimNotifyA(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload);
 
-	virtual void OnAnimBlendOut() {}
-	virtual void OnAnimNotify(FName NotifyName) {}
-
-
+public:
+	virtual void ChangeState(const uint8& nextState);
+	FOnCharacterEvent OnChangeStateDelegate;
+	void ReturnState();
 public:
 	void ErrorCheck(bool IsLog, const FString ErrorMessage) const;
 
-
-public: // PlayerCharacter로 이전 해야함.
-	FOnCharacterEvent OnChangeStateDelegate;
-public:
-	void ChangeState(const uint8& nextState);
-	void ReturnState();
 protected:
 	bool IsValidStateMgr() const;
 protected:
 	class UBehaviorStateManager* StateManager = nullptr;
 
-protected:
-	uint8 CurState = static_cast<uint8>(0);
+public:
+	uint8 GetCurState() const;
 };

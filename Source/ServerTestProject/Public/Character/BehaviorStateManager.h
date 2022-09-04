@@ -43,6 +43,8 @@ protected:
 	uint8 PrevUpperBehavior = static_cast<uint8>(99);
 	uint8 PrevLowerBehavior = static_cast<uint8>(99);
 
+public:
+	uint8 GetCurState() const;
 protected:
 	bool IsValidCharacter() const;
 };

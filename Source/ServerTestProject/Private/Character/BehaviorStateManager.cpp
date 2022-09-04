@@ -65,13 +65,15 @@ void UBehaviorStateManager::BeginPlay()
 
 void UBehaviorStateManager::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
-	if (!StateList.Find(CurState)) return;
-	if (StateList[CurState] == nullptr) return;
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	if (!StateList.Find(GetCurState())) return;
+	if (StateList[GetCurState()] == nullptr) return;
 
 	auto CurStateClass = StateList[CurState];
 
 	CurStateClass->Update(DeltaTime);
-
+	 
 	if (UpperBehaviorList.Find(CurStateClass->GetUpperIndex()))
 		UpperBehaviorList[CurStateClass->GetUpperIndex()]->Update(DeltaTime);
 
@@ -105,10 +107,11 @@ void UBehaviorStateManager::RegisterLowerBehavior(BehaviorBase* StateClass, cons
 void UBehaviorStateManager::ChangeState(const uint8& nextState)
 {
 	if (nextState == CurState) return;
-	if (!StateList.Find(nextState)) return;
 
 	PrevState = CurState;
 	CurState = nextState;
+
+	if (!StateList.Find(CurState)) return;
 
 	// Update State
 	StateList[CurState]->Start();
@@ -121,8 +124,15 @@ void UBehaviorStateManager::ReturnState()
 	CurState = PrevState;
 	PrevState = static_cast<uint8>(99);
 
+	if (!StateList.Find(CurState)) return;
+
 	// Update State
 	StateList[CurState]->Start();
+}
+
+uint8 UBehaviorStateManager::GetCurState() const
+{
+	return CurState;
 }
 
 bool UBehaviorStateManager::IsValidCharacter() const

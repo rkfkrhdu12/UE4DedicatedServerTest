@@ -26,7 +26,7 @@ EBTNodeResult::Type UBTTask_MoveForAttack::ExecuteTask(UBehaviorTreeComponent& O
 
 		FVector PlayerLocation = Controller->GetPlayerCharacter()->GetActorLocation();
 
-		BlackBoard->SetValue<UBlackboardKeyType_Vector>("MoveLocation", PlayerLocation);
+		BlackBoard->SetValue<UBlackboardKeyType_Vector>(Controller->GetMoveLocationID(), PlayerLocation);
 // 
 // 		FVector MonsterLocation = MonsterCharacter->GetActorLocation();
 // 

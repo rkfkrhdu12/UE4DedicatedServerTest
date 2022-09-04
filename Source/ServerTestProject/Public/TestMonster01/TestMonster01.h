@@ -16,11 +16,11 @@ class SERVERTESTPROJECT_API ATestMonster01 : public AMonsterBase
 public:
 	ATestMonster01();
 	virtual ~ATestMonster01();
-
+	
 protected:
 	class UCharacterMovementComponent* CharacterMovement;
 
-protected:
 private:
 	bool IsValidCharacterMovement() const;
+
 };

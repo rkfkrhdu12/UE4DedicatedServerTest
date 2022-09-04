@@ -10,18 +10,3 @@ ATestMonster01Controller::ATestMonster01Controller(const FObjectInitializer& Obj
 	:AAIControllerBase(ObjectInitializer)
 {
 }
-
-ATestMonster01Controller::~ATestMonster01Controller()
-{
-
-}
-
-void ATestMonster01Controller::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
-void ATestMonster01Controller::OnPossess(APawn* InPawn)
-{
-	Super::OnPossess(InPawn);
-}

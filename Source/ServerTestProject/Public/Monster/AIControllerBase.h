@@ -26,6 +26,10 @@ public:
 
 	UFUNCTION()
 		void DetectPlayer(AActor* Actor);
+
+	UFUNCTION()
+		void UpdateState();
+
 protected:
 	UPROPERTY(Transient)
 		class UBehaviorTreeComponent* BehaviorTreeComponent;
@@ -35,8 +39,6 @@ protected:
 
 	UPROPERTY()
 		class AMonsterBase* MonsterCharacter;
-
-#pragma region Sight Perception
 
 	class UAISenseConfig_Sight* SightConfig;
 
@@ -48,31 +50,37 @@ protected:
 		float SightAge = 3.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CustomVariable_AI)
 		float SightFOV = 90.f;
-#pragma endregion
 
 	class APlayerCharacter* PlayerCharacter;
 
-	int CurState = 0;
-
 	bool bIsFindPlayer = false;
+
 	FName CurStateKeyID;
 	FName IsFindPlayerKeyID;
+
 	FName AttackTypeID;
 	FName AttackRangeID;
 	FName AttackDamageID;
+	FName MoveLocationID;
 
 protected:
 	bool IsValidBlackBoard() const;
+	bool IsValidMonster() const;
 
 public:
 	int GetCurState() const;
 	void SetCurState(int val);
 
+	bool IsFindPlayer() const { return bIsFindPlayer; }
+
+	UBlackboardComponent* GetBlackBoardComponent() const { return BlackBoardComponent; }
 	APlayerCharacter* GetPlayerCharacter() const;
 
-	FName GetCurStateKeyID() const { return CurStateKeyID; }
-	FName GetIsFindPlayerKeyID() const { return IsFindPlayerKeyID; }
-	FName GetAttackTypeID() const { return AttackTypeID; }
-	FName GetAttackRangeID() const { return AttackRangeID; }
-	FName GetAttackDamageID() const { return AttackDamageID; }
+	const FName GetCurStateKeyID() const { return CurStateKeyID; }
+	const FName GetIsFindPlayerKeyID() const { return IsFindPlayerKeyID; }
+
+	const FName GetAttackTypeID() const { return AttackTypeID; }
+	const FName GetAttackRangeID() const { return AttackRangeID; }
+	const FName GetAttackDamageID() const { return AttackDamageID; }
+	const FName GetMoveLocationID() const { return MoveLocationID; }
 };

@@ -3,6 +3,7 @@
 
 #include "TestMonster01/TestMonster01.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "TestMonster01/TestMonster01BehaviorStateMgr.h"
 
 ATestMonster01::ATestMonster01()
 	: AMonsterBase()
@@ -14,6 +15,9 @@ ATestMonster01::ATestMonster01()
 
 	CharacterMovement->bOrientRotationToMovement = true;
 	CharacterMovement->RotationRate = FRotator(0.f, 600.f, 0.f);
+
+	// Manager Init
+	StateManager = CreateDefaultSubobject<UTestMonster01BehaviorStateMgr>(TEXT("BehaviorStateManager"));
 }
 
 ATestMonster01::~ATestMonster01()

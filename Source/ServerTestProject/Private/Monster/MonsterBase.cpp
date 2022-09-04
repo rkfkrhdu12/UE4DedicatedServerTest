@@ -25,3 +25,8 @@ void AMonsterBase::BeginPlay()
 {
 	Super::BeginPlay();
 }
+
+void AMonsterBase::ChangeState(const uint8& nextState)
+{
+	ACharacterBase::ChangeState(nextState);
+}

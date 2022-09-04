@@ -96,7 +96,7 @@ protected:
 		float footToGround = 10.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	float MeshLocationOffsetZ = 90.f;
+		float MeshLocationOffsetZ = 90.f;
 	float DeltaTime = 0.0f;
 
 	TArray<AActor*> DummyArray;

@@ -10,9 +10,7 @@ UENUM(BlueprintType)
 enum class EMonster01Behavior : uint8
 {
 	Idle,
-	BattleIdle,
-	Chase,
-	Attack,
+	Battle,
 	Last
 };
 
@@ -20,9 +18,7 @@ UENUM(BlueprintType)
 enum class EMonster01State : uint8
 {
 	Idle,
-	BattleIdle,
-	Chase,
-	Attack,
+	Battle,
 	Last
 };
 

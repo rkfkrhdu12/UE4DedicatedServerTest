@@ -27,6 +27,16 @@ void StateBase::Update(float DeltaTime)
 
 }
 
+void StateBase::AnimBlendOut()
+{
+
+}
+
+void StateBase::AnimNotify(FName notifyName)
+{
+
+}
+
 bool StateBase::IsValidCharacter() const
 {
 	return Character != nullptr && Character->IsValidLowLevelFast();

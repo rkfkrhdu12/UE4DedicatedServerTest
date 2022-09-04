@@ -40,6 +40,7 @@ AAIControllerBase::AAIControllerBase(const FObjectInitializer& ObjectInitializer
 	AttackTypeID = "AttackType";
 	AttackRangeID = "AttackRange";
 	AttackDamageID = "AttackDamage";
+	MoveLocationID = "MoveLocation";
 }
 
 void AAIControllerBase::OnPossess(APawn* InPawn)
@@ -56,6 +57,9 @@ void AAIControllerBase::OnPossess(APawn* InPawn)
 	BehaviorTreeComponent->StartTree(*bt);
 
 	OnDetectPawnDelegate.AddDynamic(this, &AAIControllerBase::DetectPlayer);
+
+	MonsterCharacter->OnChangeStateDelegate.AddDynamic(this, &AAIControllerBase::UpdateState);
+	UpdateState();
 }
 
 void AAIControllerBase::OnPawnDetected(const TArray<AActor*>& DetectedPawns)
@@ -75,28 +79,55 @@ void AAIControllerBase::DetectPlayer(AActor* Actor)
 
 	if (PlayerCharacter == nullptr) PlayerCharacter = Cast<APlayerCharacter>(Actor);
 
-	bIsFindPlayer = !bIsFindPlayer;
+	bIsFindPlayer = !IsFindPlayer();
 
 	if (IsValidBlackBoard())
-		BlackBoardComponent->SetValueAsBool(GetIsFindPlayerKeyID(), bIsFindPlayer);
+		BlackBoardComponent->SetValueAsBool(GetIsFindPlayerKeyID(), IsFindPlayer());
+}
+
+void AAIControllerBase::UpdateState()
+{
+	if (IsValidBlackBoard())
+	{
+		BlackBoardComponent->SetValueAsInt(GetCurStateKeyID(), GetCurState());
+
+		UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("%d"), GetCurState()));
+	}
 }
 
 bool AAIControllerBase::IsValidBlackBoard() const
 {
+#if UE_EDITOR 
+	if (IsValidMonster())
+		MonsterCharacter->ErrorCheck(!(BlackBoardComponent != nullptr && BlackBoardComponent->IsValidLowLevelFast()), " Controller's BlackBoardComponent is Null");
+#endif
 	return BlackBoardComponent != nullptr && BlackBoardComponent->IsValidLowLevelFast();
+}
+
+bool AAIControllerBase::IsValidMonster() const
+{
+	return MonsterCharacter != nullptr && MonsterCharacter->IsValidLowLevelFast();
 }
 
 int AAIControllerBase::GetCurState() const
 {
-	return CurState;
+	if (IsValidMonster())
+		return MonsterCharacter->GetCurState();
+
+	return 0;
 }
 
 void AAIControllerBase::SetCurState(int val)
 {
-	CurState = val;
+	if (IsValidMonster())
+		MonsterCharacter->ChangeState(static_cast<uint8>(val));
 
 	if (IsValidBlackBoard())
-		BlackBoardComponent->SetValueAsInt(GetCurStateKeyID(), CurState);
+	{
+		BlackBoardComponent->SetValueAsInt(GetCurStateKeyID(), GetCurState());
+
+		UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("%d"), GetCurState()));
+	}
 }
 
 APlayerCharacter* AAIControllerBase::GetPlayerCharacter() const

@@ -3,16 +3,16 @@
 #include "Character/BehaviorStateManager.h"
 
 #include "Kismet/KismetSystemLibrary.h"
+#include "GameFramework/Actor.h"
+
+#include "Net/UnrealNetwork.h"
 
 
 ACharacterBase::ACharacterBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
-}
 
-ACharacterBase::~ACharacterBase()
-{
-
+	SetReplicates(true);
 }
 
 void ACharacterBase::OnAnimBlendOutA(UAnimMontage* Montage, bool bInterrupted)
@@ -29,18 +29,28 @@ void ACharacterBase::OnAnimNotifyA(FName NotifyName, const FBranchingPointNotify
 
 void ACharacterBase::ChangeState(const uint8& nextState)
 {
-	if (StateManager == nullptr || !StateManager->IsValidLowLevelFast()) return;
+	if (!IsValidStateMgr()) return;
 
 	StateManager->ChangeState(nextState);
-	OnChangeStateDelegate.Broadcast();
+	if (OnChangeStateDelegate.IsBound())
+		OnChangeStateDelegate.Broadcast();
 }
 
 void ACharacterBase::ReturnState()
 {
-	if (StateManager == nullptr || !StateManager->IsValidLowLevelFast()) return;
+	if (!IsValidStateMgr()) return;
 
 	StateManager->ReturnState();
-	OnChangeStateDelegate.Broadcast();
+	if (OnChangeStateDelegate.IsBound())
+		OnChangeStateDelegate.Broadcast();
+}
+
+uint8 ACharacterBase::GetCurState() const
+{
+	if (IsValidStateMgr())
+		return StateManager->GetCurState();
+	
+	return 0U;
 }
 
 /* 변수의 유효함을 검증해주는 함수들입니다. */
