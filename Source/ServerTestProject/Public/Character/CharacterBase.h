@@ -28,6 +28,9 @@ public:
 	UFUNCTION()
 		virtual void OnAnimNotifyA(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload);
 
+	UFUNCTION(NetMulticast, Reliable, BlueprintCallable)
+		void Multicast_PlayingAnimMontage(UAnimMontage* AnimMontage);
+
 public:
 	virtual void ChangeState(const uint8& nextState);
 	FOnCharacterEvent OnChangeStateDelegate;

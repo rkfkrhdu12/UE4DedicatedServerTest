@@ -27,6 +27,14 @@ void ACharacterBase::OnAnimNotifyA(FName NotifyName, const FBranchingPointNotify
 		OnAnimNotifyDelegate.Broadcast(NotifyName);
 }
 
+void ACharacterBase::Multicast_PlayingAnimMontage_Implementation(UAnimMontage* AnimMontage)
+{
+	UKismetSystemLibrary::PrintString(GetWorld(), "Hello");
+
+	if (AnimMontage && GetWorld()->IsClient())
+		PlayAnimMontage(AnimMontage);
+}
+
 void ACharacterBase::ChangeState(const uint8& nextState)
 {
 	if (!IsValidStateMgr()) return;
@@ -49,7 +57,7 @@ uint8 ACharacterBase::GetCurState() const
 {
 	if (IsValidStateMgr())
 		return StateManager->GetCurState();
-	
+
 	return 0U;
 }
 
